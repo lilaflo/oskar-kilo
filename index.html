@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tippst Du ein Deine Quatsche!</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+      input,
+      textarea {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        width: 20rem;
+      }
+      textarea {
+        height: 10rem;
+      }
+      #out {
+        font-size: 24px;
+        cursor: pointer;
+        user-select: none;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        max-width: 50rem;
+      }
+      #out:empty {
+        display: none;
+      }
+    </style>
+    <script>
+      const alphabet = {
+        A: "Alpha",
+        B: "Bravo",
+        C: "Charlie",
+        D: "Delta",
+        E: "Echo",
+        F: "Foxtrot",
+        G: "Golf",
+        H: "Hotel",
+        I: "India",
+        J: "Juliett",
+        K: "Kilo",
+        L: "Lima",
+        M: "Mike",
+        N: "November",
+        O: "Oscar",
+        P: "Papa",
+        Q: "Quebec",
+        R: "Romeo",
+        S: "Sierra",
+        T: "Tango",
+        U: "Uniform",
+        V: "Victor",
+        W: "Whiskey",
+        X: "X-ray",
+        Y: "Yankee",
+        Z: "Zulu",
+      };
+
+      const reverseAlphabet = Object.fromEntries(
+        Object.entries(alphabet).map(([k, v]) => [v.toLowerCase(), k.toLowerCase()])
+      );
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const input = document.querySelector("input");
+        const out = document.querySelector("#out");
+        const textarea = document.querySelector("textarea");
+
+        input.addEventListener("input", (e) => {
+          textarea.value = "";
+          const result = e.target.value
+            .split("")
+            .map((char) => alphabet[char.toUpperCase()] || char)
+            .join(" ");
+          out.textContent = result;
+        });
+
+        out.addEventListener("click", () => {
+          if (!out.textContent) return;
+          navigator.clipboard.writeText(out.textContent);
+          out.style.backgroundColor = "#f0f0f0";
+          setTimeout(() => {
+            out.style.backgroundColor = "transparent";
+          }, 250);
+        });
+
+        textarea.addEventListener("input", (e) => {
+          input.value = "";
+          const result = e.target.value
+            .toLowerCase()
+            .split(/\s+/)
+            .map((word) => reverseAlphabet[word] || word)
+            .join("");
+          out.textContent = result;
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Tippst Du ein Deine Quatsche!</h1>
+    <input
+      placeholder="Type text to convert to NATO alphabet"
+      type="text"
+      autofocus
+    />
+    <p id="out"></p>
+    <h2>Decoder</h2>
+    <textarea placeholder="Type NATO alphabet words to decode"></textarea>
+  </body>
+</html>
