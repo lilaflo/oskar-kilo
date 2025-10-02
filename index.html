@@ -80,7 +80,7 @@
           textarea.value = "";
           const result = e.target.value
             .split("")
-            .map((char) => alphabet[char.toUpperCase()] || char)
+            .map((char) => char === " " ? " / " : alphabet[char.toUpperCase()] || char)
             .join(" ");
           out.textContent = result;
         });
@@ -99,7 +99,7 @@
           const result = e.target.value
             .toLowerCase()
             .split(/\s+/)
-            .map((word) => reverseAlphabet[word] || word)
+            .map((word) => word === "/" ? " " : reverseAlphabet[word] || word)
             .join("");
           out.textContent = result;
         });
