@@ -2,6 +2,8 @@
 
 A simple static web application that converts text to NATO phonetic alphabet and vice versa.
 
+**Try it out here: https://oskar-kilo.fly.dev**
+
 ## Features
 
 - **Text to NATO**: Convert regular text to NATO phonetic alphabet (e.g., "hello" → "Hotel Echo Lima Lima Oscar")
