@@ -3,108 +3,90 @@
   <head>
     <title>Tippst Du ein Deine Quatsche!</title>
     <style>
+      :root {
+        --bg: #0a0a0a;
+        --fg: #e8e8e8;
+        --muted: #888;
+        --accent: #333;
+        --border: #222;
+      }
+      * { box-sizing: border-box; }
       body {
-        font-family: sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro", "Segoe UI", Roboto, sans-serif;
+        background: var(--bg);
+        color: var(--fg);
+        margin: 0;
+        min-height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        height: 100vh;
-        margin: 0;
+        padding: 40px 20px;
       }
-      input,
-      textarea {
-        padding: 10px;
+      h1 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        margin: 0 0 24px 0;
+        text-align: center;
+      }
+      h2 {
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--muted);
+        margin: 40px 0 16px 0;
+        text-align: center;
+      }
+      input, textarea {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        color: var(--fg);
+        font-family: inherit;
         font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        margin-bottom: 20px;
-        width: 20rem;
+        padding: 14px 16px;
+        width: 24rem;
+        outline: none;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      }
+      input:focus, textarea:focus {
+        border-color: var(--fg);
+        box-shadow: 0 0 0 3px rgba(255,255,255,0.1);
       }
       textarea {
-        height: 10rem;
+        height: 12rem;
+        resize: vertical;
       }
       #out {
-        font-size: 24px;
+        font-size: 18px;
+        line-height: 1.6;
         cursor: pointer;
         user-select: none;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 10px;
-        max-width: 50rem;
+        background: var(--accent);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 16px 20px;
+        width: 100%;
+        max-width: 48rem;
+        margin-top: 16px;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-break: break-word;
+        transition: background 0.15s ease;
+      }
+      #out:hover {
+        background: #3a3a3a;
       }
       #out:empty {
         display: none;
       }
+      .hint {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 8px;
+        text-align: center;
+      }
     </style>
-    <script>
-      const alphabet = {
-        A: "Alpha",
-        B: "Bravo",
-        C: "Charlie",
-        D: "Delta",
-        E: "Echo",
-        F: "Foxtrot",
-        G: "Golf",
-        H: "Hotel",
-        I: "India",
-        J: "Juliett",
-        K: "Kilo",
-        L: "Lima",
-        M: "Mike",
-        N: "November",
-        O: "Oscar",
-        P: "Papa",
-        Q: "Quebec",
-        R: "Romeo",
-        S: "Sierra",
-        T: "Tango",
-        U: "Uniform",
-        V: "Victor",
-        W: "Whiskey",
-        X: "X-ray",
-        Y: "Yankee",
-        Z: "Zulu",
-      };
-
-      const reverseAlphabet = Object.fromEntries(
-        Object.entries(alphabet).map(([k, v]) => [v.toLowerCase(), k.toLowerCase()])
-      );
-
-      document.addEventListener("DOMContentLoaded", () => {
-        const input = document.querySelector("input");
-        const out = document.querySelector("#out");
-        const textarea = document.querySelector("textarea");
-
-        input.addEventListener("input", (e) => {
-          textarea.value = "";
-          const result = e.target.value
-            .split("")
-            .map((char) => char === " " ? " / " : alphabet[char.toUpperCase()] || char)
-            .join(" ");
-          out.textContent = result;
-        });
-
-        out.addEventListener("click", () => {
-          if (!out.textContent) return;
-          navigator.clipboard.writeText(out.textContent);
-          out.style.backgroundColor = "#f0f0f0";
-          setTimeout(() => {
-            out.style.backgroundColor = "transparent";
-          }, 250);
-        });
-
-        textarea.addEventListener("input", (e) => {
-          input.value = "";
-          const result = e.target.value
-            .toLowerCase()
-            .split(/\s+/)
-            .map((word) => word === "/" ? " " : reverseAlphabet[word] || word)
-            .join("");
-          out.textContent = result;
-        });
-      });
-    </script>
+    <script src="script.js"></script>
   </head>
   <body>
     <h1>Tippst Du ein Deine Quatsche!</h1>
@@ -113,8 +95,6 @@
       type="text"
       autofocus
     />
-    <p id="out"></p>
-    <h2>Decoder</h2>
     <textarea placeholder="Type NATO alphabet words to decode"></textarea>
   </body>
 </html>
